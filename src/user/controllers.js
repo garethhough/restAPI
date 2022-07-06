@@ -47,6 +47,23 @@ exports.find = async (req, res) => {
   }
 };
 
+// findAll: This section finds all users in the database.
+exports.findAll = async (req, res) => {
+  try {
+    const users = await User.find(req.params);
+    if (!users) {
+      throw new Error("No users found");
+    } else {
+      res.send({ users });
+    }
+  } catch (error) {
+    console.log(error);
+    res.send({ error });
+  }
+};
+
+
+
 // update: take username and edit the email address and password
 exports.update = async (req, res) => {
   try {

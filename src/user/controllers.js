@@ -35,7 +35,7 @@ exports.login = async (req, res) => {
 // find: This section finds a user in the database by their username.
 exports.find = async (req, res) => {
   try {
-    const user = await User.findOne({ username: req.body.username });
+    const user = await User.findOne({ username: req.params.username });
     if (!user) {
       throw new Error("User not found");
     } else {
@@ -50,7 +50,10 @@ exports.find = async (req, res) => {
 // update: take username and edit the email address and password
 exports.update = async (req, res) => {
   try {
-    const userUpdates = await User.updateOne(req.body.userObj, req.body.updateObj);
+    const userUpdates = await User.updateOne(
+      req.body.userObj,
+      req.body.updateObj
+    );
     if (!userUpdates) {
       throw new Error("User not found");
     } else {
@@ -60,4 +63,19 @@ exports.update = async (req, res) => {
     console.log(error);
     res.send({ error });
   }
-}
+};
+
+// delete: take username and delete the user
+exports.delUser = async (req, res) => {
+  try {
+    const deleteUser = await User.deleteOne({ username: req.params.username });
+    if (!deleteUser) {
+      throw new Error("User not found");
+    } else {
+      res.send({ deleteUser });
+    }
+  } catch (error) {
+    console.log(error);
+    res.send({ error });
+  }
+};

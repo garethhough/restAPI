@@ -1,6 +1,6 @@
 const User = require("./model");
 
-//Controller: This section controls the requests of the user and generates the appropriate response which is fed to the user.
+// Controller: This section controls the requests of the user and generates the appropriate response which is fed to the user.
 
 // signup: This section creates a new user and stores it in the database.
 exports.signUp = async (req, res) => {
@@ -61,8 +61,6 @@ exports.findAll = async (req, res) => {
     res.send({ error });
   }
 };
-
-
 
 // update: take username and edit the email address and password
 exports.update = async (req, res) => {

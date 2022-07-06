@@ -13,4 +13,3 @@ exports.hashPass = async (req, res, next) => {
     res.send({ error });
   }
 };
-

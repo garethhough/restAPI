@@ -1,9 +1,8 @@
 const User = require("./model");
 
-
 //Controller: This section controls the requests of the user and generates the appropriate response which is fed to the user.
 
-// Signup: This section creates a new user and stores it in the database.
+// signup: This section creates a new user and stores it in the database.
 exports.signUp = async (req, res) => {
   try {
     const newUser = await User.create(req.body);
@@ -15,7 +14,7 @@ exports.signUp = async (req, res) => {
   }
 };
 
-//login: This section checks if the user exists in the database and if the password is correct.
+// login: This section checks if the user exists in the database and if the password is correct.
 exports.login = async (req, res) => {
   try {
     const user = await User.findOne({
@@ -48,4 +47,17 @@ exports.find = async (req, res) => {
   }
 };
 
-
+// update: take username and edit the email address and password
+exports.update = async (req, res) => {
+  try {
+    const userUpdates = await User.updateOne(req.body.userObj, req.body.updateObj);
+    if (!userUpdates) {
+      throw new Error("User not found");
+    } else {
+      res.send({ userUpdates });
+    }
+  } catch (error) {
+    console.log(error);
+    res.send({ error });
+  }
+}

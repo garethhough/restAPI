@@ -1,6 +1,6 @@
 require("./db/connection"); //instantly run database connection
 const express = require("express"); //pull in all express modules
-const userRouter = require("./user/routes"); // bring in all endpoints conncted to userRouter
+const userRouter = require("./user/routes"); // bring in all endpoints connected to userRouter
 const app = express(); // create webserver constant to manipulate
 const port = process.env.PORT || 5001; // store supplied port or port 5001
 

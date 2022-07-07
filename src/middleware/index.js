@@ -7,26 +7,21 @@ exports.hashPass = async (req, res, next) => {
     // const hashedPass = await bcrypt.hash(tempPass, 8); //hashed the password and stored it in a new constant
     // req.body.password = hashedPass; //stores freshly hashed password back in the req body
     req.body.password = await bcrypt.hash(req.body.password, 8); //all steps above, condensed into 1 line
-    next(); //moves onto next middleware/controller in endpoint
+    next(); // moves onto next middleware/controller in endpoint
   } catch (error) {
     console.log(error);
     res.send({ error });
   }
 };
 
-//unhashPass: Takes password input, hash's it and then compares it to the hashed password in the database.
+//unhashPass: takes password input, hash's it and then compares it to the hashed password in the database.
 exports.unhashPass = async (req, res, next) => {
   try {
-    const user = await User.findOne({ username: req.body.username });
-    if (!user) {
-      throw new Error("User not found");
+    req.user = await User.findOne({ username: req.body.username });
+    if (await bcrypt.compare(req.body.password, req.user.password)) {
+      next();
     } else {
-      const isMatch = await bcrypt.compare(req.body.password, user.password);
-      if (!isMatch) {
-        throw new Error("Incorrect credentials");
-      } else {
-        next();
-      }
+      throw new Error("Incorrect credentials");
     }
   } catch (error) {
     console.log(error);

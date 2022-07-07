@@ -17,14 +17,10 @@ exports.signUp = async (req, res) => {
 // login: This section checks if the user exists in the database and if the password is correct.
 exports.login = async (req, res) => {
   try {
-    const user = await User.findOne({
-      username: req.body.username,
-      password: req.body.password,
-    });
-    if (!user) {
+    if (!req.user) {
       throw new Error("Incorrect credentials");
     } else {
-      res.send({ user });
+      res.send({ user: req.user });
     }
   } catch (error) {
     console.log(error);
@@ -94,4 +90,3 @@ exports.delUser = async (req, res) => {
     res.send({ error });
   }
 };
-

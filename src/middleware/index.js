@@ -13,3 +13,23 @@ exports.hashPass = async (req, res, next) => {
     res.send({ error });
   }
 };
+
+//unhashPass: Takes password input, hash's it and then compares it to the hashed password in the database.
+exports.unhashPass = async (req, res, next) => {
+  try {
+    const user = await User.findOne({ username: req.body.username });
+    if (!user) {
+      throw new Error("User not found");
+    } else {
+      const isMatch = await bcrypt.compare(req.body.password, user.password);
+      if (!isMatch) {
+        throw new Error("Incorrect credentials");
+      } else {
+        next();
+      }
+    }
+  } catch (error) {
+    console.log(error);
+    res.send({ error });
+  }
+};

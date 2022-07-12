@@ -7,6 +7,6 @@ userRouter.post("/user", hashPass, signUp); //defining a post request on /user p
 userRouter.post("/login", unhashPass, login); //defining a post request on /login path, that calls the login controller
 userRouter.get("/user/:username", find); //defining a get request on /user:username path, that calls the find controller
 userRouter.get("/findAll", findAll); //defining a get request on /users path, that calls the findAll controller
-userRouter.patch("/user", update); //defining a put request on /user path, that calls the update controller
+userRouter.patch("/user", hashPass, update); //defining a put request on /user path, that calls the update controller
 userRouter.delete("/user/:username", delUser) //defining a delete request on /user/:username path, that calls the delUser controller
 module.exports = userRouter;

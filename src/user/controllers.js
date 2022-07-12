@@ -65,12 +65,13 @@ exports.update = async (req, res) => {
       req.body.userObj,
       req.body.updateObj
     );
-    if (!userUpdates) {
-      throw new Error("User not found");
+
+    if (userUpdates.modifiedCount > 0) {
+      res.status(200).send({ msg: "Successfully Updated" });
     } else {
-      res.send({ userUpdates });
+      throw new Error({ msg: "Something went wrong" });
     }
-  } catch (error) {
+   } catch (error) {
     console.log(error);
     res.send({ error });
   }
